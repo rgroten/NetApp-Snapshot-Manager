@@ -1,0 +1,13 @@
+.project
+.pydevproject
+.settings
+*.pyc
+refreshEnv.xml
+*.backup
+*.log
+snapmgr/static/js/ngProgress.min.js
+snapmgr/static/css/ngProgress.css
+snapmgr/static/js/xml2json.min.js
+snapmgr/NaServer.py
+snapmgr/NaElement.py
+snapmgr/NaErrno.py
