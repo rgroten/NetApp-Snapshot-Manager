@@ -30,7 +30,7 @@ deploy_snapmgr.sh is a wrapper script you can use to deploy snapmgr (and update 
 
 ## config.ini Details - see example config.ini included in project for syntax
 
-1. DEFAULT
+1. [DEFAULT]
 
 	- VolFilters	: is a list of strings used to exclude volumes from being displayed on the page
 	- Debug		: Debug mode enables additional logging on the server side. It also enables Flask debugging and should be set to False in real deployments
@@ -40,11 +40,11 @@ deploy_snapmgr.sh is a wrapper script you can use to deploy snapmgr (and update 
 	- TLSCACertFile	: If using LDAPS a path to the cacert may be required
 	- RFCRequired	: If true for a specific environment, the server will check an RFC Database to ensure that an RFC is created before allowing a Snapshot Restore to proceed
 
-2. GENERAL
+2. [GENERAL]
 
 	- Environments	: This is a list of NetApp environments to allow the user to connect to.  Each string in this list must have a subsection with connection info.
 
-3. RFCDBCONN
+3. [RFCDBCONN]
 
 	- Server		: Server where RFC Database runs
 	- Port			: Port to connect to the RFC Database on 
@@ -52,8 +52,8 @@ deploy_snapmgr.sh is a wrapper script you can use to deploy snapmgr (and update 
 	- User/Password	: User/Password of user who has access to RFC database (read-only access is enough)
 	- Driver		: Driver used by pyodbc to connect to database (ie: PostgreSQL, MySQL, etc)
 
-4. ENVIRONMENTS
-One [ENVIRON] section is required for each string in Environments parameter. 
+4. [ENVIRONMENTS]
+One [ENV] section is required for each string in Environments parameter. 
 
 These parameters override anything specified in the DEFAULT section.
 
@@ -67,20 +67,24 @@ This app requires the NetApp python libraries (NaServer.py, NaElement.py) to com
 
 ## Dump of installation/setup (on Fedora 22)
 
+```bash
 [rgroten@rgroten-fed ~] $ git clone rlx7009:/git/NetAppSnapManager
 [rgroten@rgroten-fed ~] $ cd NetAppSnapManager
 [rgroten@rgroten-fed NetAppSnapManager] $ sudo dnf install python-virtualenv gcc-c++ openldap-devel unixODBC-devel libxml2-devel libxslt-devel
 [rgroten@rgroten-fed NetAppSnapManager] $ virtualenv env
 [rgroten@rgroten-fed NetAppSnapManager] $ source env/bin/activate
 (env)[rgroten@rgroten-fed NetAppSnapManager] $ pip install -r snapmgr/requirements.txt
-[rgroten@rgroten-fed NetAppSnapManager] $ ./deploy_snapmgr.sh 
+[rgroten@rgroten-fed NetAppSnapManager] $ ./deploy_snapmgr.sh
+```
 
 For simple testing purposes, you can now run the app using Flask's built-in webserver (NOT to be used for real/prod environments):
+
+```bash
 (env)[rgroten@rgroten-fed NetAppSnapManager] $ cd snapmgr
 (env)[rgroten@rgroten-fed snapmgr] $ python snapmgr.py
  * Running on http://127.0.0.1:5001/ (Press CTRL+C to quit)
  * Restarting with stat
-
+```
 Contact
 =======
 
@@ -88,7 +92,8 @@ For help or questions please email me
 
 License
 =======
-SnapManager - Web client for performing snapshot tasks on NetApp Volumes using NetApp Storage APIs
+SnapManager - Web client for performing snapshot tasks on NetApp Volumes using NetApp ONTAP
+
 Copyright (C) 2015  Ryan Groten
 
 This program is free software; you can redistribute it and/or modify
