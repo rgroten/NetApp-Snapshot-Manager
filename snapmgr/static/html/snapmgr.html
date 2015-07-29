@@ -1,0 +1,124 @@
+<error></error>
+	
+<volumes></volumes>
+	
+<snapshots></snapshots>
+
+<!-- Modals for user input -->
+<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="createModalLabel">Create Snapshot for {{ selectedVol['volume-id-attributes'].name }}</h4>
+      </div>
+      <div class="modal-body">
+      
+        <label for="createSnapText" class="control-label">New Snapshot Name (Optional):</label>
+        <input type="text" class="form-control" id="createSnapText" name="createSnapText" placeholder="Enter optional name...">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" id="createSnapBtn" data-dismiss="modal" ng-click="createSnapshot(selectedVol['volume-id-attributes'].name)">Create</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="deleteModalLabel">Confirm Action</h4>
+      </div>
+      <div class="modal-body">     
+        <p>Do you really want to delete {{selectedSnap.name}} ?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" id="deleteSnapBtn" data-dismiss="modal" ng-click="deleteSnapshot()">Confirm</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="renameModal" tabindex="-1" role="dialog" aria-labelledby="renameModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="renameModalLabel">Rename Snapshot</h4>
+      </div>
+      <div class="modal-body">
+      
+      	<form name="renameSnapForm" class="form-horizontal" novalidate>
+      		<div class="form-group">
+      			<label for="renameSnapText" class="col-xs-3 control-label">New Name</label>
+        		<div class="col-xs-8">
+        			<input type="text" class="form-control form-validate" ng-model="renameSnapText" id="renameSnapText" name="renameSnapText" placeholder="{{selectedSnap.name}}" required />
+        		</div>
+      		</div>
+      		<div class="form-group">
+      			<div class="col-xs-5 col-xs-offset-3">
+      		        <button type="button"
+			        	class="btn btn-success" 
+			        	id="renameSnapBtn"
+			        	data-dismiss="modal"
+			        	ng-disabled="renameSnapForm.$invalid"
+			        	ng-click="renameSnapshot()">Submit</button>
+			        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>	
+        		</div>
+      		</div>
+      	</form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="restoreModal" tabindex="-1" role="dialog" aria-labelledby="restoreModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="renameModalLabel">Restore Snapshot {{ selectedSnap.name }}</h4>
+      </div>
+      <div class="modal-body">
+      		
+      	<span class="label label-danger">Danger</span> This action is destructive!<br>Before restoring a snapshot, make sure you unmount the mountpoints first.
+        <br><br>
+        
+        <div ng-if="selectedEnv.rfcRequired == 'True'">
+			<span class="label label-warning">Notice</span> This is a production data restore, a valid RFC is required and must be in Scheduled state to continue.
+			<br>
+	      	<form name="restoreSnapForm" class="form-horizontal" novalidate>
+	      		<div class="form-group">
+	      			<label for="restoreSnapText" class="col-xs-3 control-label">RFC #</label>
+	        		<div class="col-xs-8">
+	        			<input type="number" class="form-control form-validate" ng-model="restoreSnapText" id="restoreSnapText" name="restoreSnapText" placeholder="Enter RFC # here" required />
+	        		</div>
+	      		</div>
+	      		<div class="form-group">
+	      			<div class="col-xs-10 col-xs-offset-8">
+	      		        <button type="button"
+				        	class="btn btn-success" 
+				        	id="restoreSnapBtn"
+				        	data-dismiss="modal"
+				        	ng-disabled="restoreSnapForm.$invalid"
+				        	ng-click="restoreSnapshot()">Submit</button>
+				        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>	
+	        		</div>
+	      		</div>
+	      	</form>
+		</div>
+      	<div class="form-group" ng-if="selectedEnv.rfcRequired != 'True'">
+      		<div class="col-xs-10 col-xs-offset-8">
+      			<button type="button"
+					class="btn btn-success" 
+				    id="restoreSnapBtn"
+				    data-dismiss="modal"
+				    ng-click="restoreSnapshot()">Submit</button>
+				 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>	
+	        </div>
+	        <br>
+	    </div>
+      </div>
+    </div>
+  </div>
+</div>

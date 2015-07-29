@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Operations Manager{% endblock %}
+{% block navbar_title %}Operations Manager{% endblock %}
+
+{% block body_attribs %} ng-app="opmgr"{% endblock %}
+{% block content %}
+
+{% raw %}
+
+<!-- TODO: Add controller into directive -->
+
+<navi-bar></navi-bar>
+
+<div class="container-fluid content fade-view" ng-view></div>
+
+
+{% endraw %}
+{% endblock content %}

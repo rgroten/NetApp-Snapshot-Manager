@@ -1,0 +1,9 @@
+<!-- Track by $index instead of reference to prevent dupes error (if primitives are identical) -->
+<div ng-show="alerts.length > 0" ng-repeat="alert in alerts track by $index">
+	<div class="alert alert-{{alert.severity}} alert-dismissible fade in" role="alert">
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close" ng-click="alertList.remove(alert)">
+    		<span aria-hidden="true">&times;</span>
+    	</button>
+    	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> {{ alert.message }}
+  	</div>
+</div>

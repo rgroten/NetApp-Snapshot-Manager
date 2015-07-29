@@ -1,0 +1,67 @@
+<div class="collapse" id="collapseSnaps">
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-sm-4"><h4>Snapshot List for {{selectedVol['volume-id-attributes'].name}}</h4></div>
+					<div class="col-sm-2"></div>
+					<div class="col-sm-3">
+						<div class="input-group pull-right"> 
+							<span class="input-group-addon">Filter</span>
+							<input ng-model="searchSnapText.name" class="form-control" placeholder="Filter snapshots here...">
+						</div>
+					</div>
+					<div class="col-sm-3">
+						<div class="btn-group pull-right">
+							<button type="button" 
+								class="btn btn-default dropdown-toggle" 
+								data-toggle="dropdown"
+								aria-expanded="false">Actions <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" role="menu">
+								<li title="Select Volume" ng-class="{disabled:selectedVol == null}"><a data-target="#createModal" data-toggle="modal"">New Snapshot</a></li>
+								<li title="Select Snapshot" ng-class="{disabled:selectedSnap == null}"><a data-target="#renameModal" data-toggle="modal">Rename Snapshot</a></li>
+								<li title="Select Snapshot" ng-class="{disabled:selectedSnap == null}"><a data-target="#deleteModal" data-toggle="modal"">Delete Snapshot</a></li>
+								<li title="Select Snapshot" ng-class="{disabled:selectedSnap == null}"><a data-target="#restoreModal" data-toggle="modal">Restore Snapshot</a></li>
+								<li><a ng-click="toggleVolPanel()" id="toggleVolPanel" >Hide Volume Panel</a></li>
+								<li class="divider"></li>
+								<li><a ng-click="loadSnaps()">Refresh Snapshots</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	  	<div class="list-group panel-fixed" ng-hide="snaps[volname].length == 0" id="snapPanel">
+	  		<!-- list-group-header -->
+			<a class="list-group-item">
+				<div class="container-fluid" ng-hide="vols == []">
+					<div class="row"><b>
+					<div class="col-sm-8">Name</div>
+					<div class="col-sm-2">Created</div>
+					<div class="col-sm-1">Size</div>
+					<div class="col-sm-1">Clone?</div>
+					</b></div>
+				</div>
+			</a>
+	  		<a class="list-group-item"
+		  		ng-click="$parent.selectedSnap = snap"
+		  		ng-class="{active:selectedSnap == snap}" 
+		  		ng-repeat="snap in snaps[selectedVol['volume-id-attributes'].name] | filter:searchSnapText as snapResults" >			
+ 		  		<div class="container-fluid">
+		  			<div class="row">
+		  				<div class="col-sm-8">{{snap.name}}</div>
+		  				<div class="col-sm-2">{{snap["access-time"] * 1000 | date: 'yyyy-MM-dd HH:mm:ss' }}</div>
+		  				<div class="col-sm-1">{{snap.total * 1024 | bytesToSize }}</div>
+		  				<div class="col-sm-1" ng-show="snap.dependency.indexOf('vclone') > -1">
+							<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+							<span class="sr-only">Yes</span>
+						</div>
+		  				<div class="col-sm-2" ng-hide="snap.dependency.indexOf('vclone') > -1""></div>
+	  				</div>
+	  			</div>
+	  		</a>
+	  		<div class="container-fluid" ng-if="snapResults.length == 0"><strong>No results found.</strong></div>
+	  	</div>
+	</div>
+</div>
