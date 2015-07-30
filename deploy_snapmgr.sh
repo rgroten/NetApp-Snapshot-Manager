@@ -1,7 +1,6 @@
 # PATH to deployment directory of app
 GIT_PATH=$(pwd)
 APP_PATH=$GIT_PATH/snapmgr
-WHOAMI=$(whoami)
 
 if [ ! -d $APP_PATH ]; then
     echo "Error: $APP_PATH not found"
@@ -28,7 +27,7 @@ else
 fi
 
 # Stop web service
-if [ $WHOAMI = "root" ]; then
+if [ $USER = "root" ]; then
     service httpd stop
 else
     sudo service httpd stop
@@ -64,7 +63,7 @@ chmod -R o-rwx $GIT_PATH
 chmod g+rwx $APP_PATH
 
 # Restart web service
-if [ $WHOAMI = "root" ]; then
+if [ $USER = "root" ]; then
     service httpd start
 else
     sudo service httpd start
