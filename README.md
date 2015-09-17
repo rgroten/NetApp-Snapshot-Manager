@@ -3,6 +3,8 @@
 Features
 =============
 
+[![Join the chat at https://gitter.im/rgroten/NetApp-Snapshot-Manager](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/rgroten/NetApp-Snapshot-Manager?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 This web-based AngularJS and Flask application allows users to perform simple operations on NetApp volumes.  
 
 Operations that this app provide include: 
