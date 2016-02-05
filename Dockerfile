@@ -28,9 +28,10 @@ RUN echo "</VirtualHost>" >> /etc/apache2/mods-available/wsgi.conf
 EXPOSE 80
 
 # Copy snapmgr source to docker volume
-RUN mkdir -p /src
-RUN chown www-data:www-data /src
-VOLUME ["/src"]
+RUN mkdir -p /src/snapmgr
+RUN chown www-data:www-data /src/snapmgr
+VOLUME ["/src/snapmgr"]
 ADD snapmgr /src/snapmgr
+RUN chown -R www-data:www-data /src
 
 CMD ["apache2ctl", "-k start -D FOREGROUND"]
