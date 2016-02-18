@@ -20,7 +20,7 @@ import RFCChecker
 
 app = Flask(__name__)
 formatter = logging.Formatter("%(asctime)s %(levelname)s %(user)s %(env)s %(funcName)s : %(message)s")
-handler = RotatingFileHandler("/home/rgroten/git/NetApp-Snapshot-Manager/snapmgr/snapmgr.log", maxBytes=10000000, backupCount=3)
+handler = RotatingFileHandler(NaFunctions.getConfigOption("LogFile"), maxBytes=10000000, backupCount=3)
 handler.setLevel(logging.INFO)
 handler.setFormatter(formatter)
 app.logger.addHandler(handler)
