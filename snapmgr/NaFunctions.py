@@ -5,6 +5,7 @@ Created on Feb 23, 2015
 '''
 
 import ConfigParser
+import ssl
 from datetime import datetime
 
 from flask.globals import g
@@ -16,6 +17,14 @@ from NaServer import NaServer
 
 # from flask.globals import g
 def connect():
+    try:
+        _create_unverified_https_context = ssl._create_unverified_context
+    except AttributeError:
+        # Legacy Python that doesn't verify HTTPS certificates by default
+        pass
+    else:
+        # Handle target environment that doesn't support HTTPS verification
+        ssl._create_default_https_context = _create_unverified_https_context
     naHost = getConfigOption("NAHost")
     user = getConfigOption("User")
     password = getConfigOption("Password")
@@ -31,7 +40,7 @@ def connect():
 def getConfigOption(option, section=None):
            
     config = ConfigParser.ConfigParser()
-    config.read("/home/rgroten/git/NetApp-Snapshot-Manager/snapmgr/config.ini")
+    config.read("config.ini")
 
     # If section is not provided, first check if g.env is set and use that.
     # Otherwise, set section to GENERAL
